@@ -55,4 +55,4 @@ var srv = http.createServer(function(req, res) {
 });
 
 
-srv.listen(8080, 'localhost');
+srv.listen(8080, '0.0.0.0');
