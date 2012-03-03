@@ -16,12 +16,12 @@ fs.readFile('htdocs/index.html', function(err, data) {
 });
 
 var srv = http.createServer(function(req, res) {
-	res.writeHead(200, {
-		'content-type': 	'text/html',
-	});
 	var reqUrl = url.parse(req.url);
 	var query = querystring.parse(reqUrl.query);
 	if(/\?/.test(req.url)) {
+		res.writeHead(200, {
+			'content-type': 	'text/html',
+		});
 		graph.getEdgeList(query.username, function(edgeList) {
 			data = index.replace(/\/\/replace_me/, 'var edgeList = ' + JSON.stringify(edgeList) + ';');
 			util.puts(data);
@@ -29,7 +29,28 @@ var srv = http.createServer(function(req, res) {
 		});
 	}
 	else{
-		res.end(index);
+		if(reqUrl === '/' || reqUrl ==='/index.html')
+		{
+			res.writeHead(200, {
+				'content-type': 	'text/html',
+			});
+			res.end(index);
+		} else {
+			if(/\.\./.test(reqUrl.path)) {
+				res.writeHead(403);
+				res.end('That\'s not the file you are looking for');
+			} else {
+				fs.readFile('./htdocs'+reqUrl.path, function(err, data) {
+					if(err) {
+						res.writeHead(404);
+						res.end('404 - File Not Found');
+					} else {
+						res.writeHead(200);
+						res.end(data);
+					}
+				});
+			}
+		}
 	}
 });
 
