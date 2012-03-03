@@ -5,7 +5,6 @@ var graph = require('./graph.js');
 var querystring = require('querystring');
 var fs = require('fs');
 
-util.log('started');
 
 var index= "";
 
@@ -16,6 +15,8 @@ process.__defineGetter__('stdout', function() {
 process.__defineGetter__('stderr', function() { 
 	return fs.createWriteStream('errlog', {'flags': 'a'}); 
 }); 
+
+util.log('started');
 
 fs.readFile('htdocs/index.html', function(err, data) {
 	if(err)
