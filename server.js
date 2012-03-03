@@ -5,6 +5,8 @@ var graph = require('./graph.js');
 var querystring = require('querystring');
 var fs = require('fs');
 
+util.log('started');
+
 var index= "";
 
 process.__defineGetter__('stdout', function() { 
