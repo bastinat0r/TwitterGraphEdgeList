@@ -19,17 +19,17 @@ module.exports.request = function (reqString, callback) {
 		hostname : 'search.twitter.com',
 		port : 80,
 		path : '/search.json?q=' + encodeURIComponent(reqString),
+		headers : {
+			'Content-Type' : 'node.js-twitter-search'
+		}
 		method : 'GET'
 	};
 
 	var answer = "";
 
-	var req = http.request(options, function(res) {	
+	var req = http.request(options, function(res) {
+		
 		res.on('data', function(dat) {
-			if(res.statusCode >= 400) {
-				require('util').puts(res.statusCode);
-				require('util').puts(res.dat);
-			} 
 			answer = answer + dat;
 		});
 
