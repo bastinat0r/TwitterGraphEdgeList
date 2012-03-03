@@ -7,9 +7,17 @@ var fs = require('fs');
 
 var index= "";
 
+process.__defineGetter__('stdout', function() { 
+	return fs.createWriteStream('log', {'flags': 'a'}); 
+}); 
+
+process.__defineGetter__('stderr', function() { 
+	return fs.createWriteStream('errlog', {'flags': 'a'}); 
+}); 
+
 fs.readFile('htdocs/index.html', function(err, data) {
 	if(err)
-		util.puts(err);
+		util.log(err);
 	else {	
 		index = index + data;
 	}
@@ -43,7 +51,7 @@ var srv = http.createServer(function(req, res) {
 					if(err) {
 						res.writeHead(404);
 						res.end('404 - File Not Found');
-						util.puts('File Not Found in htdocs: ' + reqUrl.path);
+						util.log('File Not Found in htdocs: ' + reqUrl.path);
 					} else {
 						res.writeHead(200);
 						res.end(data);
