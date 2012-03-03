@@ -28,7 +28,7 @@ var srv = http.createServer(function(req, res) {
 		});
 	}
 	else{
-		if(reqUrl === '/' || reqUrl ==='/index.html')
+		if(reqUrl.path === '/' || reqUrl.path ==='/index.html')
 		{
 			res.writeHead(200, {
 				'content-type': 	'text/html',
