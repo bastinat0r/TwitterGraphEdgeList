@@ -4,11 +4,11 @@ var util = require('util');
 function getOuterNodeEdges(outerNodes, edges, callback) {
 	if(outerNodes.length > 0) {
 		var name = outerNodes.pop();
-		util.puts('getting out edges for @' + name);
 		getOutEdges(name, function(incoming) {
 			for(inc in incoming) {
 				edges.push({'in':inc, 'out' : name, weight : incoming[inc]});
 			}
+			getOuterNodeEdges(outerNodes, edges, callback);
 		});
 	} else {
 		callback(edges);
@@ -39,7 +39,7 @@ module.exports.getEdgeList = function (name, callback) {
 		getOutEdges(name, function(incoming) {
 			var outerNodes = [];
 			for(inc in incoming) {
-				edges.push({'in':inc, 'out' : name, weight : incoming[inc]});
+				edges.push({'in':name, 'out' : inc, weight : incoming[inc]});
 				outerNodes.push(inc);
 			};
 			util.puts(JSON.stringify(outerNodes));
