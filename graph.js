@@ -29,15 +29,15 @@ function getOutEdges(name, callback) {
 					incoming[x] = 1;
 			}
 		} catch (err) {
-				util.puts(err);
-				util.puts(answer);
+				util.log(err);
+				util.log(answer);
 		}
 		callback(incoming);
 	});
 }
 
 module.exports.getEdgeList = function (name, callback) {
-	util.puts('getting edge list for @'+ name);
+	util.log('getting edge list for @'+ name);
 	var edges = [];
 	try {
 		getOutEdges(name, function(incoming) {
@@ -46,15 +46,15 @@ module.exports.getEdgeList = function (name, callback) {
 				edges.push({'in':name, 'out' : inc, weight : incoming[inc]});
 				outerNodes.push(inc);
 			};
-			util.puts(JSON.stringify(outerNodes));
+			util.log(JSON.stringify(outerNodes));
 			getOuterNodeEdges(outerNodes, edges, callback);
 		});
 
 	} catch (err) {
-		util.puts(err);
+		util.log(err);
 		
-		util.puts('While parsing: ');
-		util.puts(answer);
+		util.log('While parsing: ');
+		util.log(answer);
 	}
 };
 
