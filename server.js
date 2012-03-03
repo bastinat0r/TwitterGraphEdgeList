@@ -24,7 +24,6 @@ var srv = http.createServer(function(req, res) {
 		});
 		graph.getEdgeList(query.username, function(edgeList) {
 			data = index.replace(/\/\/replace_me/, 'var edgeList = ' + JSON.stringify(edgeList) + ';');
-			util.puts(data);
 			res.end(data);
 		});
 	}
@@ -44,6 +43,7 @@ var srv = http.createServer(function(req, res) {
 					if(err) {
 						res.writeHead(404);
 						res.end('404 - File Not Found');
+						util.puts('File Not Found in htdocs: ' + reqUrl.path);
 					} else {
 						res.writeHead(200);
 						res.end(data);

@@ -16,17 +16,21 @@ function getOuterNodeEdges(outerNodes, edges, callback) {
 }
 
 function getOutEdges(name, callback) {
-	util.puts('getting out edges for @' + name);
 	var incoming = [];
 	search.request('@'+name, function(answer) {
-		tweets = JSON.parse(answer);
-		/* get outgoing edges */
-		for(i in tweets.results) {
-			var x = tweets.results[i].from_user;
-			if(incoming[x] > 0)
-				incoming[x]++;
-			else
-				incoming[x] = 1;
+		try {
+			var tweets = JSON.parse(answer);
+			/* get outgoing edges */
+			for(i in tweets.results) {
+				var x = tweets.results[i].from_user;
+				if(incoming[x] > 0)
+					incoming[x]++;
+				else
+					incoming[x] = 1;
+			}
+		} catch (err) {
+				util.puts(err);
+				util.puts(answer);
 		}
 		callback(incoming);
 	});
@@ -54,10 +58,3 @@ module.exports.getEdgeList = function (name, callback) {
 	}
 };
 
-
-
-/*
-getEdgeList('Bastinat0r', function(edges) {
-	util.puts(JSON.strinify(edges));
-});
-*/
