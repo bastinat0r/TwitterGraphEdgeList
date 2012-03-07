@@ -54,8 +54,8 @@
           ctx.beginPath()
 					ctx.strokeStyle = "#CCCCCC";
           ctx.moveTo(pt1.x, pt1.y);
-					var cx = (pt1.x + pt2.x) / 2 - (pt1.y - pt2.y) /6;
-					var cy = (pt1.y + pt2.y) / 2 + (pt1.x - pt2.x) /6;
+					var cx = (pt1.x + pt2.x) / 2 - (pt1.y - pt2.y) /10;
+					var cy = (pt1.y + pt2.y) / 2 + (pt1.x - pt2.x) /10;
           ctx.quadraticCurveTo(cx, cy, pt2.x, pt2.y);
           ctx.stroke()
         })
